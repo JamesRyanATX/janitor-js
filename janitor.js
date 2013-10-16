@@ -77,11 +77,6 @@ SOFTWARE.
             var attr = node.attributes[a],
                 attrName = attr.name.toLowerCase();
 
-            // Allow attribute?
-            if (attrs.indexOf(attrName) === -1) {
-              node.removeAttribute(node.attributes[a].name);
-            }
-
             // Allow protocol?
             if (config.protocolAttrs.indexOf(attrName) !== -1) {
               var url = doc.createElement('a');
@@ -90,6 +85,13 @@ SOFTWARE.
               if (config.protocols.indexOf(url.protocol.replace(/\:$/, '')) === -1) {
                 node.setAttribute(node.attributes[a].name, '');
               }
+            }
+            
+            // Allow attribute?
+            if (attrs.indexOf(attrName) === -1) {
+              node.removeAttribute(node.attributes[a].name);
+              // Shift the array to continue looping.
+              a = a - 1;
             }
           }
 
